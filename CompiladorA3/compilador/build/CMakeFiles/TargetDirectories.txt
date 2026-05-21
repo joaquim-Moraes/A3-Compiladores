@@ -1,0 +1,3 @@
+D:/compiladorv1_20260423113408/compilador/build/CMakeFiles/compilador.dir
+D:/compiladorv1_20260423113408/compilador/build/CMakeFiles/edit_cache.dir
+D:/compiladorv1_20260423113408/compilador/build/CMakeFiles/rebuild_cache.dir

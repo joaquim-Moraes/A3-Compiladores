@@ -1,0 +1,3 @@
+printf("Ola, Alunos!");
+int nota = 8;
+printf(nota);

@@ -1,0 +1,6 @@
+int x = 5;
+int y = 2;
+printf(x + y * 3);
+printf((x + y) * 3);
+printf(x / y);
+printf(2 ^ 3);
