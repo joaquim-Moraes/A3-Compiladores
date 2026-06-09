@@ -129,11 +129,62 @@ std::unique_ptr<Node> Parser::parseAtribuicaoSimples() {
 std::unique_ptr<Node> Parser::parseComandoFor() {
     expect(TokenType::FOR);
     expect(TokenType::ABRE_PARENTESE);
-    auto init = parseAtribuicaoSimples();
+    std::unique_ptr<Node> init = nullptr;
+    // init can be declaration, assignment, or empty
+    if (current().type == TokenType::PONTO_VIRGULA) {
+        // empty init
+        advance();
+    } else {
+        if (current().type == TokenType::INT || current().type == TokenType::FLOAT || current().type == TokenType::DOUBLE) {
+            // parseDeclaracao consumes its own semicolon
+            init = parseDeclaracao();
+        } else {
+            init = parseAtribuicaoSimples();
+            expect(TokenType::PONTO_VIRGULA);
+        }
+    }
+
+    // condition: optional (empty means true)
+    std::unique_ptr<Node> cond = nullptr;
+    if (current().type == TokenType::PONTO_VIRGULA) {
+        // empty condition -> treat as true
+        cond = std::make_unique<NumeroLiteral>(1.0);
+    } else {
+        cond = parseExpressao();
+    }
     expect(TokenType::PONTO_VIRGULA);
-    auto cond = parseExpressao();
-    expect(TokenType::PONTO_VIRGULA);
-    auto post = parseAtribuicaoSimples();
+
+    // post: can be assignment, ++/-- on identifier, or empty
+    std::unique_ptr<Node> post = nullptr;
+    if (current().type == TokenType::FECHA_PARENTESE) {
+        // empty post
+    } else {
+        if (current().type == TokenType::IDENTIFICADOR && peek().type == TokenType::MAIS_MAIS) {
+            // convert i++ -> i = i + 1
+            std::string name = current().value;
+            advance(); // consume identifier
+            advance(); // consume ++
+            post = std::make_unique<Atribuicao>(name,
+                std::make_unique<OperacaoBinaria>("+",
+                    std::make_unique<Identificador>(name),
+                    std::make_unique<NumeroLiteral>(1.0)
+                )
+            );
+        } else if (current().type == TokenType::IDENTIFICADOR && peek().type == TokenType::MENOS_MENOS) {
+            // convert i-- -> i = i - 1
+            std::string name = current().value;
+            advance(); // consume identifier
+            advance(); // consume --
+            post = std::make_unique<Atribuicao>(name,
+                std::make_unique<OperacaoBinaria>("-",
+                    std::make_unique<Identificador>(name),
+                    std::make_unique<NumeroLiteral>(1.0)
+                )
+            );
+        } else {
+            post = parseAtribuicaoSimples();
+        }
+    }
     expect(TokenType::FECHA_PARENTESE);
     auto body = parseBloco();
     return std::make_unique<ComandoFor>(std::move(init), std::move(cond), std::move(post), std::move(body));

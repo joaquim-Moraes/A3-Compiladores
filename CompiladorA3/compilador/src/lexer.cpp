@@ -52,8 +52,28 @@ Token Lexer::nextToken() {
         tok.type = TokenType::CADEIA;
     } else {
         switch (c) {
-            case '+': tok.type = TokenType::MAIS; tok.value = "+"; pos++; break;
-            case '-': tok.type = TokenType::MENOS; tok.value = "-"; pos++; break;
+            case '+':
+                if (pos + 1 < src.size() && src[pos+1] == '+') {
+                    tok.type = TokenType::MAIS_MAIS;
+                    tok.value = "++";
+                    pos += 2;
+                } else {
+                    tok.type = TokenType::MAIS;
+                    tok.value = "+";
+                    pos++;
+                }
+                break;
+            case '-':
+                if (pos + 1 < src.size() && src[pos+1] == '-') {
+                    tok.type = TokenType::MENOS_MENOS;
+                    tok.value = "--";
+                    pos += 2;
+                } else {
+                    tok.type = TokenType::MENOS;
+                    tok.value = "-";
+                    pos++;
+                }
+                break;
             case '*': tok.type = TokenType::ASTERISCO; tok.value = "*"; pos++; break;
             case '/': tok.type = TokenType::BARRA; tok.value = "/"; pos++; break;
             case '^': tok.type = TokenType::POTENCIA; tok.value = "^"; pos++; break;

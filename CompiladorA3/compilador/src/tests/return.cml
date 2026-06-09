@@ -1,0 +1,4 @@
+int i = 5;
+printf(i);
+return;
+printf(0);

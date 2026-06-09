@@ -1,0 +1,4 @@
+int v = 42;
+printf(v);
+printf(1 + 2 * 3);
+printf(4 / 2);
