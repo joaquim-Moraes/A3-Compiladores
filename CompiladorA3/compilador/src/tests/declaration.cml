@@ -4,3 +4,4 @@ float c = a + b;
 printf(a);
 printf(b);
 printf(c);
+printf(a);

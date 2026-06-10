@@ -130,28 +130,16 @@ std::unique_ptr<Node> Parser::parseComandoFor() {
     expect(TokenType::FOR);
     expect(TokenType::ABRE_PARENTESE);
     std::unique_ptr<Node> init = nullptr;
-    // init can be declaration, assignment, or empty
-    if (current().type == TokenType::PONTO_VIRGULA) {
-        // empty init
-        advance();
+    // init: apenas declaracao
+    if (current().type == TokenType::INT || current().type == TokenType::FLOAT || current().type == TokenType::DOUBLE) {
+        // parseDeclaracao consome o ';' interno do for
+        init = parseDeclaracao();
     } else {
-        if (current().type == TokenType::INT || current().type == TokenType::FLOAT || current().type == TokenType::DOUBLE) {
-            // parseDeclaracao consumes its own semicolon
-            init = parseDeclaracao();
-        } else {
-            init = parseAtribuicaoSimples();
-            expect(TokenType::PONTO_VIRGULA);
-        }
+        throw std::runtime_error("Esperado declaracao no init do for na linha " + std::to_string(current().line));
     }
 
-    // condition: optional (empty means true)
-    std::unique_ptr<Node> cond = nullptr;
-    if (current().type == TokenType::PONTO_VIRGULA) {
-        // empty condition -> treat as true
-        cond = std::make_unique<NumeroLiteral>(1.0);
-    } else {
-        cond = parseExpressao();
-    }
+    // condition: obrigatoria (expressao)
+    auto cond = parseExpressao();
     expect(TokenType::PONTO_VIRGULA);
 
     // post: can be assignment, ++/-- on identifier, or empty
