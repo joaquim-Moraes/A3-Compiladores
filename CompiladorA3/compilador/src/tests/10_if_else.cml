@@ -1,0 +1,12 @@
+int i = 0;
+if (i == 0) { 
+    printf(100);
+     } else { 
+        printf(0); 
+        }
+if (i != 0) { 
+    printf(1); 
+    } 
+    else { 
+        printf(200); 
+        }

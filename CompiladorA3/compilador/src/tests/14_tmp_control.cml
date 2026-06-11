@@ -1,0 +1,14 @@
+int i = 0; 
+    for (i = 0; i < 3; i = i + 1) { 
+        printf(i); 
+    } 
+    if (i == 3) { 
+        printf(100); 
+        } 
+        else { 
+            printf(0);
+             } 
+int j = 0; 
+while (j < 2) { 
+    printf(j);
+     j = j + 1; } 

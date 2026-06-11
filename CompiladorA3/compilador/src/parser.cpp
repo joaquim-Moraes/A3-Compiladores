@@ -132,7 +132,6 @@ std::unique_ptr<Node> Parser::parseComandoFor() {
     std::unique_ptr<Node> init = nullptr;
     // init: apenas declaracao
     if (current().type == TokenType::INT || current().type == TokenType::FLOAT || current().type == TokenType::DOUBLE) {
-        // parseDeclaracao consome o ';' interno do for
         init = parseDeclaracao();
     } else {
         throw std::runtime_error("Esperado declaracao no init do for na linha " + std::to_string(current().line));
