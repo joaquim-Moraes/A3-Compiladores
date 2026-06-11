@@ -1,4 +1,4 @@
 int a = 10;
-float b = 3.5;
+float b = 3.6;
 a = a + b;
 printf(a * 2);

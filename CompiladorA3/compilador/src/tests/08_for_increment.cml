@@ -1,4 +1,6 @@
-
+float b= 1;
 for (int i = 0; i < 4; i++) {
      printf(i);
+    b= b * i/0.36;
+    printf(b);
       }

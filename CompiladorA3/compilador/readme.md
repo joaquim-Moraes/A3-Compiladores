@@ -1,3 +1,8 @@
+# Documentaçao 
+Documentação Toad:https://docs.google.com/document/d/1h_cK062rSfGektlyZPkT-UEhII_3zk5wVkmKYtKsWmM/edit?tab=t.0
+
+# Como rodar 
+Entre na pasta compilador pelo terminal e execute o comando: build\compilador.exe src\tests\07_do_while.cml(escolha o arquivo de teste pelo numero)
 # Compilador Simples
 
 Este projeto contém um compilador/interpreter didático em C++ que lê um arquivo fonte, realiza análise léxica, parsing e avalia a AST gerada.
