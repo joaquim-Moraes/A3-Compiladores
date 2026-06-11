@@ -29,6 +29,7 @@ for (i = 0; i < 10; i = i + 1) {
 3. `for (; i < 10; i = i + 1)` não é aceito porque o init não pode ser vazio.
 4. `for (i = 0; ; i = i + 1)` não é aceito porque a condição não pode ser vazia.
 
+
 ## Por que isso acontece
 
 A função `parseAtribuicaoSimples()` tem esta lógica:
